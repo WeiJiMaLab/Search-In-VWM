@@ -1,6 +1,6 @@
 # Color localization data and code
 
-This repository recreates the figure in the paper: "A Computational Approach to Search in Visual Working Memory"
+This repository recreates the figures in the paper: "A Computational Approach to Search in Visual Working Memory"
 
 ## Data
 
