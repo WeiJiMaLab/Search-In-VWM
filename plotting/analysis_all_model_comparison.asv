@@ -103,13 +103,15 @@ ci_bnd_high = 0.975;
 figure(1)
 set(gcf, 'Position', [100 100 830 290])
 marginsa = [0.13 0.11 0.09 0.1]; %MARGINS = [LEFT RIGHT BOTTOM TOP]
-guttera = [0.08 0.08];
+guttera = [0.11 0.11];
+marginsa=[0.15 0.05 0.17 0.09]; %left right bottom top
+guttera=[0.05 0.08];
 %colorz = [178,132,190; 128 128 0; 175 51 5]/255;
 grey_shade = 0.5;
 colorz = repmat([grey_shade, grey_shade, grey_shade],4,1);
 msz = 5;
 msz2 = 5;
-fontsz = 15;
+fontsz = 18;
 tlen1 = 0.024;
 tlen2 = 0.024;
 linewi = 1.6;
@@ -129,8 +131,8 @@ ylabel('AIC(Model) - AIC(VP)', 'FontName', 'Helvetica','FontSize', fontsz)
 set(gca, 'FontSize', fontsz)
 set(gca, 'ticklength',[tlen1 tlen2])
 ylim([-50 350])
-ylim([-20 200])
-%xtickangle(90)
+%ylim([-20 200])
+xtickangle(90)
 
 tight_subplot(1,3,1,2, guttera, marginsa)
 for mi = 1:4
@@ -145,8 +147,8 @@ set(gca, 'FontSize', fontsz)
 set(gca, 'ticklength',[tlen1 tlen2])
 ylabel('BIC(Model) - BIC(VP)', 'FontName', 'Helvetica','FontSize', fontsz)
 ylim([-50 350])
-ylim([-20 200])
-%xtickangle(90)
+%ylim([-20 200])
+xtickangle(90)
   
 tight_subplot(1,3,1,3, guttera, marginsa)
 
