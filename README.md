@@ -14,7 +14,7 @@ Run the function `All_Data.m` in the data-analysis folder. This script loads in 
 - `reaction_time` (seconds)
 - `col_dist`: absolute circular_distance between target and non-target colors within domain of [0°,180°] (uniformly distributed)
 
-For creation of simulated data, use the script `sim_data_all_models.m` that creates a simulated data structure like the real data. All the model fitting scripts described below should work for the simulated data. To check the parameter recovery, use the script `param_recovery.m`. `TODO for ADITI: ADD THESE SCRIPTS IN`
+For creation of simulated data, use the script `sim_data_all_models.m` that creates a simulated data structure like the real data. All the model fitting scripts described below should work for the simulated data. To check the parameter recovery, use the script `param_recovery.m`. 
 
 ## Model fitting
 
@@ -53,5 +53,5 @@ All the plotting scripts are within one folder called `plotting`. Below is a lis
 - `analysis_all_summary_statistics.m` provides an analysis of proportion correct behavior across trials, with each experimental condition: set size, color distance, and spatial distance. 
 - `analysis_all_parametric.m` plots the parametric resource models. Note the script asks for an `mi` variable to be set which specifies the model index that the script will produce a figure for. This model index can be EP, EPF, VP, or VPF. 
 - `analysis_all_model_non_parametric.m` produces the modeling fits for the non-parametric VP resource model.
-- `analysis_all_model_comparison.m` uses the summary paramater mat files for each model fit in the `model_params_summary` folder (which is automatically saved if you run the modeling fits using any of the above scripts), and creates a model comparision plot with the files that are loaded in the script. Note that by default, all the comparisions are relative to the third model---but this can be changed through the `compare_index` variable in this script. `TODO FOR ADITI -- CLEAN THIS UP.`
+- `analysis_all_model_comparison.m` uses the summary paramater mat files for each model fit in the `model_params_summary` folder (which is automatically saved if you run the modeling fits using any of the above scripts), and creates a model comparision plot with the files that are loaded in the script. Note that by default, all the comparisions are relative to the third model---but this can be changed through the `compare_index` variable in this script. 
 
