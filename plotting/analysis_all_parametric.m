@@ -5,7 +5,7 @@ close all; clear all;
 alldata = load('../slot-model/alldata.mat');
 model_pred = 1; % if you want to plot model predictions
 N_samp = 200;%1000;%200;%1000;
-mi = 4%3 % 1: VPF; 2: EPF, 3: VP, 4: EP
+mi = 3%3 % 1: VPF; 2: EPF, 3: VP, 4: EP
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 allJs_log = [0 0 0 0]
@@ -51,7 +51,7 @@ color_distt = [37 52 148; 65 182 196; 161 218 180; 230 220 100]'/255;
 color_distt_m = (color_distt + 2*ones(3,4))/3;
 msz = 3;
 msz2 = 3;
-fontsz = 14;
+fontsz = 11;
 ticksz = 0.025;
 
 prob_corr_pred = nan(Nsubj,N_trials);
@@ -216,18 +216,6 @@ for si = 1:Nsubj
             prop_corr_pred_sz(si,i) = mean(prob_corr_pred_fit(si,ind_s));
         end
         
-        dist = [1 2 3 4];
-        % group by spatial dist
-        for j = 1:length(dist) % dist = [1 2 3 4]
-            ind_sd = (data.spatial_dist == dist(j));
-            ind_s_sd = ind_s & ind_sd;
-            prop_corr_sd(si,i,j) = ( sum(data.response(ind_s_sd == 1))/sum(ind_s_sd));
-            if model_pred
-                % we dont have predictions that vary with spatial dist
-                prop_corr_pred_sd(si,i,j) = mean(prob_corr_pred(si,i,:),3);
-            end
-        end
-        
         % group by color dist
         for j = 1:nbinz+1
             ind_cd = data.col_dist > binz(j) & data.col_dist < binz(j+1) ;
@@ -247,7 +235,7 @@ end
 %end
 
 %%
-allJs_log = log(allJs_log);
+allJs_log = (allJs_log);
 %%
 indi_sel = 1:1:Nsubj;
 %indi_sel = setdiff(1:1:Nsubj, [11 12 14]);
@@ -260,17 +248,17 @@ indi_sel = 1:1:Nsubj;
 %figure(1)
 close all;
 figure(1)
-set(gcf, 'Position', [100 100 1000 300])
+set(gcf, 'Position', [100 100 340 700])
 
 fontsz = 13;
 tlen1 = 0.024;
 tlen2 = 0.024;
 linewi = 1.75;
 
-marginsa=[0.08 0.05 0.17 0.09]; %left right bottom top
-guttera=[0.11 0.18];
+marginsa=[0.15 0.05 0.17 0.09]; %left right bottom top
+guttera=[0.05 0.08];
 
-tight_subplot(1,3,1,1, guttera, marginsa)
+tight_subplot(3,1,1,1, guttera, marginsa)
 
 if model_pred
     h_p=fill([set_size set_size(end:-1:1)],   [mean(squeeze(prop_corr_pred_sz(indi_sel,:)),1) - std(squeeze(prop_corr_pred_sz(indi_sel,:)),1)/sqrt(Nsubj)...
@@ -294,7 +282,7 @@ set(gca, 'xTick', set_size)
 set(gca, 'xTicklabels', set_size)
 set(gca, 'FontSize', fontsz)
 set(gca, 'ticklength',[tlen1 tlen2])
-text(-1, 1, 'A', 'FontName', 'Helvetica', 'FontSize', 1.1*fontsz)
+text(-0.5, 1, 'A', 'FontName', 'Helvetica', 'FontSize', 1.1*fontsz)
 
 
 if model_pred == 0
@@ -308,7 +296,7 @@ if model_pred == 0
 end
 
 % proportion correct with color distance plot
-tight_subplot(1,3,1,2, guttera, marginsa)
+tight_subplot(3,1,2,1, guttera, marginsa)
 binz_pos = mean(binz_pos_all,1);
 
 for j = 1: length(set_size)
@@ -321,7 +309,6 @@ for j = 1: length(set_size)
     errorbar(binz_pos, mean(squeeze(prop_corr_cd(indi_sel ,j,:)),1), squeeze(std(prop_corr_cd(indi_sel ,j,:),1))/sqrt(Nsubj)', 'o-','Color',color_distt(:,j), 'MarkerSize', 2, 'Linewidth',linewi, 'Capsize', 0); hold on;
     
 end
-%xticks: [[0:30:180]/ (180/pi)]
 box off
 set(gca, 'tickdir', 'out')
 set(gca, 'xtick', [0    0.5236    1.0472    1.5708    2.0944    2.6180    3.1416])
@@ -334,45 +321,39 @@ set(gca, 'ticklength',[tlen1 tlen2])
 text(-1.0, 1, 'B', 'FontName', 'Helvetica', 'FontSize', 1.1*fontsz)
 xlim([0 3.15])
 
-tight_subplot(1,3,1,3, guttera, marginsa)
-dist     = [1 2 3 4];
-sp_distt = [37 52 148; 65 182 196; 161 218 180; 230 220 100]'/255;
+tight_subplot(3,1,3,1, guttera, marginsa)
 
 for j = 1: length(set_size)
-    
-    if model_pred
-        h_p=fill([binz_pos binz_pos(end:-1:1)],   [mean(squeeze(prop_corr_pred_sd(indi_sel,j,:)),1)- std(squeeze(prop_corr_pred_sd(indi_sel,j,:)),1)/sqrt(Nsubj)...
-            fliplr(mean(squeeze(prop_corr_pred_sd(indi_sel ,j,:)),1)+ std(squeeze(prop_corr_pred_sd(indi_sel ,j,:)),1)/sqrt(Nsubj))],color_distt_m(:,j)', 'EdgeColor', 'None'); hold on;
-    end
-    
-    errorbar(dist, squeeze(mean(prop_corr_sd(:,j,:),1)), squeeze(std(prop_corr_sd(:,j,:),1))/sqrt(Nsubj), 'o-','Color',color_distt(:,j), 'MarkerSize', 2, 'Linewidth',linewi, 'Capsize', 0); hold on;
+    plot(set_size(j), mean(allJs_log(indi_sel,j)), 'o-', 'MarkerFaceColor',color_distt(:,j) , 'MarkerEdgeColor', color_distt(:,j)); hold on;
+    errorbar(set_size(j),mean(allJs_log(indi_sel,j)), std(squeeze(allJs_log(indi_sel,j)))/sqrt(Nsubj),'o-','MarkerSize', msz2, 'Color', color_distt(:,j), 'Linewidth',linewi, 'Capsize', 0); hold on;
     
 end
+plot(set_size, mean(allJs_log,1), 'r', 'Linewidth',1); hold on;
 box off
+ylabel('log mean precision J','FontName', 'Helvetica','FontSize', fontsz)
+xlabel('Set size', 'FontName','Helvetica', 'FontSize', fontsz)
 set(gca, 'tickdir', 'out')
-set(gca, 'xtick', [0.5 1 1.5 2 2.5 3 3.5 4])
-set(gca, 'xticklabels', {'', '1', '', '2', '' '3', '' '4'})
-xlabel('Spatial distance (a.u.)', 'FontName','Helvetica', 'FontSize', fontsz)
-ylabel('Proportion correct', 'FontName','Helvetica', 'FontSize', fontsz)
+set(gca, 'xTick', set_size)
+set(gca, 'xTicklabels', set_size)
+set(gca, 'tickdir', 'out')
 set(gca, 'FontSize', fontsz)
-ylim([0.5 1.02])
-xlim([0.5 4.5])
 set(gca, 'ticklength',[tlen1 tlen2])
-
-text(-1, 1, 'C', 'FontName', 'Helvetica', 'FontSize', 1.1*fontsz)
-
-
+xlim([set_size(1)-0.5 set_size(end)+0.5])
+ylim_max = max(max(allJs_log)) + 5;%40;
+ylim([0 ylim_max])
+ylim([-3 50])
+text(-0.1, ylim_max +ylim_max/12, 'C', 'FontName', 'Helvetica', 'FontSize', 1.1*fontsz)
 switch mi
     case 1
         sgtitle('VPF model')
     case 2
-        sgtitle(' ')
+        sgtitle('EPF model')
     case 3
         sgtitle('VP model')
     case 4
         sgtitle('EP model')
 end
-%%
+
 switch mi
     case 1
         psname = 'Plots/vpf_real_model_fits.pdf';
@@ -383,8 +364,8 @@ switch mi
     case 4
         psname = 'Plots/ep_real_model_fits.pdf';
 end
-
-print_pdf(psname)
+%%
+%print_pdf(psname)
 switch mi
     case 1
         filename= ['model_params_summary/nll_params_model_VPF.mat'];
@@ -395,5 +376,6 @@ switch mi
     case 4
         filename= ['model_params_summary/nll_params_model_EP.mat'];
 end
-Jbars_optim_fit = allJs_log;
+Jbars_optim_fit = allJs_log
+save("jbar_vp", "Jbars_optim_fit")
 save(filename, 'nll_fit','nll_fit_all','params_fitted','Jbars_optim_fit', 'npars', '-mat')

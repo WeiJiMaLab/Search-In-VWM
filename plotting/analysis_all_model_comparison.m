@@ -2,8 +2,8 @@ clear all; close all;
 %save(filename, 'nll_fit','nll_fit_all','params_fitted','Jbars_optim_fit', 'npars', '-mat')
 
 %% SET BEFORE RUNNING SCRIPT (CHOOSE ONE OF THE TWO OPTIONS)
-labels = {'VP','VP Non-parametric', 'VP-RR (linear cost)', 'VP-RR (power law cost)'};
-%labels = {'EP','EPF', 'VP', 'VPF'};
+%labels = {'VP','VP Non-parametric', 'VP-RR (linear cost)', 'VP-RR (power law cost)'};
+labels = {'EP','EPF', 'VP', 'VPF'};
 
 %%
 
@@ -27,7 +27,7 @@ end
 load(files_to_load_1)
 Nsubj = length(nll_fit);
 nll_fit_all_models(1,1:Nsubj) = nll_fit;
-params_fitted_M1 = params_fitted(:,1); %params_fitted; % 
+params_fitted_M1 = params_fitted; %params_fitted; % 
 Jbars_optim_fit_M1 = Jbars_optim_fit;
 npars_all(1) = npars;
 
